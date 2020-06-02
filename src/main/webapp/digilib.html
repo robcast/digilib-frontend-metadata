@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0"/>
+        <title>Digilib jQuery: fullscreen</title>
+
+        <style type="text/css">
+            body {
+            background: silver;
+	    
+	    }
+
+	    .sidenav {
+		height: 100%;
+		width: 0;
+		position: fixed;
+		z-index: 10000;
+		top: 0;
+		left: 0;
+		background-color: #111;
+		overflow-x: hidden;
+		transition: 0.5s;
+		padding-top: 60px;
+		opacity: 0.75;
+	    }
+	    
+	    .sidenav a {
+		padding: 8px 8px 8px 32px;
+		text-decoration: none;
+		font-size: 25px;
+		color: #818181;
+		display: block;
+		transition: 0.3s;
+	    }
+	    
+	    .sidenav a:hover {
+		color: #f1f1f1;
+	    }
+	    
+	    .sidenav .closebtn {
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+	    }
+	    
+	    @media screen and (max-height: 450px) {
+		.sidenav {padding-top: 15px;}
+		.sidenav a {font-size: 18px;}
+	    }
+
+	
+
+	    
+	</style>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	   <!-- full dev files -->
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+        <script type="text/javascript" src="jquery/jquery.cookie.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.geometry.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.arrows.js"></script>
+        <script type="text/javascript" src="jquery/jquery.range.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery/jquery.range.css" />
+        <script type="text/javascript" src="jquery/jquery.digilib.buttons.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.dialogs.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.sliders.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.birdseye.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.marks.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib.regions.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery/jquery.digilib.css" />
+        <link rel="stylesheet" type="text/css" href="jquery/jquery.digilib.buttons-full-32-sprite.css" />
+        <!-- minified production files
+        <script type="text/javascript" src="jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery.cookie-range.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib-basic.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery/jquery.digilib-basic.min.css" />
+        -->
+        
+        <span style="left: 20px; top: 0; font-size:25px; position:fixed; cursor:pointer; opacity:0.8; color:orange" onclick="openNav()"><h4>&#9776; Metadata</h4></span>     
+   
+        <script type="text/javascript">
+	 
+	  function showmeta() {
+	      $("<a style='font-size:15px'>Bildname: "+meta.fn+"</a>").appendTo("#meta") 
+	      $("<a style='font-size:15px'>Sektion: "+meta.sektion+"</a>").appendTo("#meta")
+	      $("<a style='font-size:15px'>Bildrechte: "+meta.bildrechte+"</a>").appendTo("#meta")
+	      $("<a style='font-size:15px'>IIIF Notation: "+meta.iiif+"</a>").appendTo("#meta")
+	      $("<a style='font-size:15px'>Beschreibung: "+meta.beschreibung+"</a>").appendTo("#meta")
+	  }
+	  
+	  $(document).ready(function() {
+	      
+	      var query = window.location.search.substring(1);
+	      var vars = query.split("&");
+	      
+	      function getValue(file){
+		  
+		  var value= $.ajax({
+		      url: file,
+		      dataType: 'json',
+		      async: false
+		  }).responseText;
+		  
+		  return value;}
+	      meta=$.parseJSON(getValue(vars[1]))
+	      var opts = {
+		  interactionMode : 'fullscreen',
+		  showRegionNumbers : true
+              };
+              var $div = $('div#digilib');
+              $div.digilib(opts);
+          });
+	  
+	  function openNav() {
+	      document.getElementById("mySidenav").style.width = "300px";
+	  }
+	  
+	  function closeNav() {
+  	      document.getElementById("mySidenav").style.width = "0";
+	  }	
+	  
+	  function openNavMeta() {
+	      document.getElementById("metaSidenav").style.width = "300px";
+	  }
+	  
+	  function closeNavMeta() {
+  	      document.getElementById("metaSidenav").style.width = "0";
+	  }	
+       </script>
+    </head>
+
+    <body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" id="meta" onclick="showmeta()">Metadata</a>
+  <a href="#" onclick="window.open('')">IIIF Notation</a>
+  <a href="#" onclick="window.open('https://edition-humboldt.de/')">Project</a>
+  <a href="#" onclick="window.open('https://robcast.github.io/digilib/install-digilib.html')">About Digilib</a>
+  <a href="#" onclick="">Download</a>
+</div>
+
+<div id="digilib">
+            <p>digilib doesn't work! Please switch on Javascript or notify the server administrator!</p>
+            <img src="img/digilib-logo-text1.png" />
+        </div>
+    </body>
+</html>
+

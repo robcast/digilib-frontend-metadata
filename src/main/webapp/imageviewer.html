@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0"/>
+        <title>Digilib jQuery: fullscreen</title>
+
+        <style type="text/css">
+            body {
+            background: silver;
+	    
+	    }
+	</style>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+        <script type="text/javascript" src="jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery.cookie-range.min.js"></script>
+        <script type="text/javascript" src="jquery/jquery.digilib-basic.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="jquery/jquery.digilib-basic.min.css" />
+        
+        <script type="text/javascript">
+
+	$(document).ready(function() {
+	var query = window.location.search.substring(1);
+	var vars = query.split("?");
+
+	 function getValue(file){
+	  var value= $.ajax({
+          url: file,
+	  dataType: 'json',
+          async: false
+       	  }).responseText; 
+
+	     return value;}
+	 
+	    meta=$.parseJSON(getValue(vars[0]))
+	    
+	    if (meta.sektion != "full") { 
+		window.open("digilib.html?fn="+meta.fn+"&"+vars[0]+"&"+meta.sektion,"_self")}
+	    else {window.open("digilib.html?fn="+meta.fn+"&"+vars[0],"_self")}
+	    
+            });
+
+        </script>
+    </head>
+
+    <body>
+       
+    </body>
+</html>
+
